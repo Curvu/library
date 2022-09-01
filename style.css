@@ -1,4 +1,157 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+:root {
+    /*? Header */
+    --header-background: #22d3ee;
+    --header-text: #1c1917;
+    /*? Main */
+    --main-background: #f1f5f9;
+    --main-text: black;
+    /* Sidebar */
+    --sidebar-background: #67e8f9;
+    /* Book */
+    --book-background: white;
+    --book-border: #0891b2;
+    /*? Footer */
+    --footer-background: #0891b2;
+    --footer-text: #fde68a;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr 75px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/*? Header */
+header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    text-transform: capitalize;
+    background-color: var(--header-background);
+    color: var(--header-text);
+    padding: 10px 0;
+}
+
+/*? Main */
+main {
+    background-color: var(--main-background);
+    color: var(--main-text);
+    box-shadow: inset 13px 0px 14px #aaaaaa;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--sidebar-background);
+    box-shadow: 2px 3px 6px #aaaaaa;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.link {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 16px;
+    text-transform: capitalize;
+    padding: 10px 0px;
+}
+
+.sidebar img {
+    width: 40px;
+}
+
+.add-book {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Books */
+.books {
+    margin: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    justify-content: center;
+}
+
+.book {
+    height: 300px;
+    max-width: 400px;
+    border-left: 6px solid var(--book-border);
+    background-color: var(--book-background);
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 2px 3px 8px #aaaaaa;
+}
+
+.title,
+.author,
+.pages {
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+}
+
+.title::after,
+.author::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--book-border);
+    margin: 10px 0;
+}
+
+.author {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.author::before {
+    content: "Author: ";
+    font-weight: 600;
+}
+
+.pages {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.pages::before {
+    content: "Pages: ";
+    font-weight: 600;
+}
+
+/*? Footer */
+footer {
+    display: grid;
+    background-color: var(--footer-background);
+    color: var(--footer-text);
+}
+
+
+.copyright {
+    justify-self: center;
+    align-self: center;
 }
