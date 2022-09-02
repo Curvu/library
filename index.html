@@ -8,85 +8,106 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <!--  -->
     <body>
-        <header>
-            <div class="left">profile</div>
-            <div class="middle">book shelf</div>
-            <div class="right">
-                <ul>
-                    <li>
-                        reading : <span id="reading-counter">0</span>
-                    </li>
-                    <li>
-                        plan to read : <span id="plan-counter">0</span>
-                    </li>
-                    <li>
-                        completed : <span id="done-counter">0</span>
-                    </li>
-                </ul>
+        <div class="page">
+            <header>
+                <div class="profile">
+                    <button class="login">Login</button>
+                </div>
+                <div class="book-shelf">book shelf</div>
+                <div class="stats">
+                    <ul>
+                        <li>
+                            reading : <span id="reading-counter">0</span>
+                        </li>
+                        <li>
+                            plan to read : <span id="plan-counter">0</span>
+                        </li>
+                        <li>
+                            completed : <span id="done-counter">0</span>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+            <main>
+                <div class="sidebar">
+                    <ul>
+                        <li class="link">
+                            <img src="./src/all.svg">
+                            all
+                        </li>
+                        <li class="link">
+                            <img src="./src/reading.svg">
+                            reading
+                        </li>
+                        <li class="link">
+                            <img src="./src/completed.svg">
+                            completed
+                        </li>
+                        <li class="link">
+                            <img src="./src/plan.svg">
+                            plan to read
+                        </li>
+                    </ul>
+                    <div class="add-book">
+                        <img src="./src/add.svg">
+                    </div>
+                </div>
+                <div class="books" id=" ">
+                    <div class="book">
+                        <p class="title">harry potter e a pedra filosofal</p>
+                        <p class="author">j. k. rowling</p>
+                        <p class="pages">264</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                    <div class="book">
+                        <p class="title">Lorem, ipsum dolor sit</p>
+                        <p class="author">amet consectetur adipisicing elit. </p>
+                        <p class="pages">420</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                    <div class="book">
+                        <p class="title">harry potter e a pedra filosofal</p>
+                        <p class="author">j. k. rowling</p>
+                        <p class="pages">264</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                    <div class="book">
+                        <p class="title">harry potter e a pedra filosofal</p>
+                        <p class="author">j. k. rowling</p>
+                        <p class="pages">264</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                    <div class="book">
+                        <p class="title">harry potter e a pedra filosofal</p>
+                        <p class="author">j. k. rowling</p>
+                        <p class="pages">264</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                    <div class="book">
+                        <p class="title">harry potter e a pedra filosofal</p>
+                        <p class="author">j. k. rowling</p>
+                        <p class="pages">264</p>
+                        <img src="./src/heart.svg">
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <p class="copyright">&copy; Copyright 2022 Curvu</p>
+            </footer>
+        </div>
+        <div class="login-container">
+            <div>
+                <label for="Name">Name</label>
+                <input type="text" id="get-name">
             </div>
-        </header>
-        <main>
-            <div class="sidebar">
-                <ul>
-                    <li class="link">
-                        <img src="./src/all.svg" alt="">
-                        all
-                    </li>
-                    <li class="link">
-                        <img src="./src/reading.svg" alt="">
-                        reading
-                    </li>
-                    <li class="link">
-                        <img src="./src/completed.svg" alt="">
-                        completed
-                    </li>
-                    <li class="link">
-                        <img src="./src/plan.svg" alt="">
-                        plan to read
-                    </li>
-                </ul>
-                <div class="add-book">
-                    <img src="./src/add.svg" alt="">
-                </div>
-            </div>
-            <div class="books">
-                <div class="book">
-                    <p class="title">harry potter e a pedra filosofal</p>
-                    <p class="author">j. k. rowling</p>
-                    <p class="pages">264</p>
-                </div>
-                <div class="book">
-                    <p class="title">Lorem, ipsum dolor sit</p>
-                    <p class="author">amet consectetur adipisicing elit. </p>
-                    <p class="pages">420</p>
-                </div>
-                <div class="book">
-                    <p class="title">harry potter e a pedra filosofal</p>
-                    <p class="author">j. k. rowling</p>
-                    <p class="pages">264</p>
-                </div>
-                <div class="book">
-                    <p class="title">harry potter e a pedra filosofal</p>
-                    <p class="author">j. k. rowling</p>
-                    <p class="pages">264</p>
-                </div>
-                <div class="book">
-                    <p class="title">harry potter e a pedra filosofal</p>
-                    <p class="author">j. k. rowling</p>
-                    <p class="pages">264</p>
-                </div>
-                <div class="book">
-                    <p class="title">harry potter e a pedra filosofal</p>
-                    <p class="author">j. k. rowling</p>
-                    <p class="pages">264</p>
-                </div>
-            </div>
-        </main>
-        <footer>
-            <p class="copyright">&copy; Copyright 2022 Curvu</p>
-        </footer>
+            <button id="submit-login">Submit</button>
+        </div>
     </body>
     <script src="./main.js"></script>
 </html>
