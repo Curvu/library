@@ -54,48 +54,11 @@
                             plan to read
                         </li>
                     </ul>
-                    <div class="add-book">
+                    <div class="add-book" aria-disabled="true">
                         <img src="./src/add.svg">
                     </div>
                 </div>
-                <div class="books" id=" ">
-                    <div class="book">
-                        <p class="title">harry potter e a pedra filosofal</p>
-                        <p class="author">j. k. rowling</p>
-                        <p class="pages">264</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                    <div class="book">
-                        <p class="title">Lorem, ipsum dolor sit</p>
-                        <p class="author">amet consectetur adipisicing elit. </p>
-                        <p class="pages">420</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                    <div class="book">
-                        <p class="title">harry potter e a pedra filosofal</p>
-                        <p class="author">j. k. rowling</p>
-                        <p class="pages">264</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                    <div class="book">
-                        <p class="title">harry potter e a pedra filosofal</p>
-                        <p class="author">j. k. rowling</p>
-                        <p class="pages">264</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                    <div class="book">
-                        <p class="title">harry potter e a pedra filosofal</p>
-                        <p class="author">j. k. rowling</p>
-                        <p class="pages">264</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                    <div class="book">
-                        <p class="title">harry potter e a pedra filosofal</p>
-                        <p class="author">j. k. rowling</p>
-                        <p class="pages">264</p>
-                        <img src="./src/heart.svg">
-                    </div>
-                </div>
+                <div class="books" id="books-container"></div>
             </main>
             <footer>
                 <p class="copyright">&copy; Copyright 2022 Curvu</p>
@@ -107,6 +70,26 @@
                 <input type="text" id="get-name">
             </div>
             <button id="submit-login">Submit</button>
+        </div>
+        <div class="add-book-container">
+            <div class="label">
+                <label for="Title">Title</label>
+                <input type="text" id="get-title">
+            </div>
+            <div class="label">
+                <label for="Author">Author</label>
+                <input type="text" id="get-author">
+            </div>
+            <div class="label">
+                <label for="Pages">Pages</label>
+                <input type="number" min="1" id="get-pages">
+            </div>
+            <select name="book-state" id="book-state">
+                <option value="watching">Watching</option>
+                <option value="plan">Plan to Watch</option>
+                <option value="completed">Completed</option>
+            </select>
+            <button id="submit-book">Submit</button>
         </div>
     </body>
     <script src="./main.js"></script>
