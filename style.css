@@ -171,7 +171,8 @@ main {
 }
 
 .title::after,
-.author::after {
+.author::after,
+.pages::after {
     content: "";
     display: block;
     width: 100%;
@@ -197,6 +198,16 @@ main {
 
 .pages::before {
     content: "Pages: ";
+    font-weight: 600;
+}
+
+.state {
+    justify-content: center;
+    text-align: center;
+}
+
+.state::before {
+    content: "State: ";
     font-weight: 600;
 }
 
@@ -238,6 +249,45 @@ footer {
 }
 
 #submit-login {
+    width: 100px;
+    height: 30px;
+}
+
+/*? Containter to add book */
+.add-book-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00000080;
+    padding: 25px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: end;
+}
+
+.label input {
+    padding-left: 4px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 200px;
+}
+
+#submit-book {
+    margin-top: 5px;
     width: 100px;
     height: 30px;
 }
