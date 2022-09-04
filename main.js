@@ -53,7 +53,7 @@ function Book() {
     this.author = ''
     this.pages = 0
     this.state = ''
-    this.liked = true
+    this.liked = false
 }
 
 if (canAddBook) {
