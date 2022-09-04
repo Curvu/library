@@ -148,18 +148,23 @@ main {
     background-color: var(--book-background);
     display: flex;
     flex-direction: column;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     padding: 10px;
     border-radius: 6px;
     box-shadow: 2px 3px 8px #aaaaaa;
 }
 
-.book img {
+.book .images {
     margin-top: auto;
     align-self: flex-end;
+    display: flex;
+    gap: 6px;
+}
+
+.book div img {
     width: 35px;
-    filter: grayscale(100%);
     user-select: none;
+    cursor: pointer;
 }
 
 .title,
