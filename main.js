@@ -1,7 +1,6 @@
-// keep profile name with localstorage
 const page = document.querySelector('.page')
 
-// Blur function
+//? Blur function
 function blur() {
     page.style.opacity = 0.3
     page.style.userSelect = 'none'
@@ -39,7 +38,6 @@ if (user !== null) {
     })
 }
 
-
 //? Add book
 const canAddBook = localStorage.getItem('user') === null ? false : true
 
@@ -55,6 +53,7 @@ function Book() {
     this.author = ''
     this.pages = 0
     this.state = ''
+    this.liked = true
 }
 
 if (canAddBook) {
@@ -67,36 +66,82 @@ if (canAddBook) {
 if (localStorage.getItem('shelf') === null || localStorage.getItem('shelf') === '') localStorage.setItem('shelf', shelf)
 else shelf = JSON.parse(localStorage.getItem('shelf'))
 
-console.log(shelf)
-
 submitBook.addEventListener('click', () => {
-    const book = new Book()
-    book.title = document.getElementById('get-title').value
-    book.author = document.getElementById('get-author').value
-    book.pages = document.getElementById('get-pages').value 
-    book.state = document.getElementById('book-state').value
+    let title = document.getElementById('get-title').value
+    let author = document.getElementById('get-author').value
+    let pages = document.getElementById('get-pages').value
 
-    shelf.push(book)
+    if (title !== '' && author !== '' && pages !== '' && pages > 0) {
+        const book = new Book()
+        book.title = title
+        book.author = author
+        book.pages = pages
+        book.state = document.getElementById('book-state').value
 
-    localStorage.setItem('shelf', JSON.stringify(shelf))
+        shelf.push(book)
 
-    // console.log(shelf)
-    // console.log(book)
-    
-    location.reload() // reload page
+        localStorage.setItem('shelf', JSON.stringify(shelf))
+        
+        location.reload() // reload page
+    } else {
+        // TODO: Show error?
+    }
 })
 
-// Render All books
-window.addEventListener('DOMContentLoaded', () => {
-    shelf.forEach((book) => {
+//? Render function
+const render = (shelf) => {
+    shelf.forEach((book, index) => {
         books.innerHTML += `
-        <div class="book">
-            <p class="title">${book.title}</p>
-            <p class="author">${book.author}</p>
-            <p class="pages">${book.pages}</p>
-            <p class="state">${book.state}</p>
-            <img src="./src/heart.svg">
-        </div>
+            <div class="book" id="book-${index}">
+                <p class="title">${book.title}</p>
+                <p class="author">${book.author}</p>
+                <p class="pages">${book.pages}</p>
+                <p class="state">${book.state}</p>
+                <div class="images">
+                    <div class="like-book">
+                        <img src="./src/heart.svg" style="${book.liked ? 'filter: grayscale(0%);' : 'filter: grayscale(100%);'}">
+                    </div>
+                    <div class="remove-book">
+                        <img src="./src/trash.svg">
+                    </div>
+                </div>
+            </div>
         `
     })
+}
+
+//? Remove book
+const removeBook = (removeBtn) => {
+    removeBtn.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            shelf.splice(parseInt(e.currentTarget.parentNode.parentNode.id.split('-')[1]), 1)
+            localStorage.setItem('shelf', JSON.stringify(shelf))
+            location.reload() // reload page
+        })
+    })
+}
+
+//? Like a book
+const likeBook = (likeBtn) => {
+    likeBtn.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            let temp = e.currentTarget.parentNode.parentNode.id.split('-')[1]
+            shelf[temp].liked = !shelf[temp].liked
+            localStorage.setItem('shelf', JSON.stringify(shelf))
+            location.reload() // reload page
+        })
+    })
+}
+
+//? Render All books
+window.addEventListener('DOMContentLoaded', () => {
+    render(shelf)
+
+    // Allow to remove btn
+    const removeBtn = document.querySelectorAll('.remove-book')
+    removeBook(removeBtn)
+
+    // Allow to like book
+    const likeBtn = document.querySelectorAll('.like-book')
+    likeBook(likeBtn)
 })
