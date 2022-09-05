@@ -2,17 +2,17 @@
     <html lang="en">
     <head>
         <title>Library</title>
+        <link rel="stylesheet" href="./style.css">
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <!--  -->
     </head>
-    <link rel="stylesheet" href="./style.css">
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <!--  -->
     <body>
         <div class="page">
             <header>
@@ -26,10 +26,10 @@
                             reading : <span id="reading-counter">0</span>
                         </li>
                         <li>
-                            plan to read : <span id="plan-counter">0</span>
+                            planned to read : <span id="planned-counter">0</span>
                         </li>
                         <li>
-                            completed : <span id="done-counter">0</span>
+                            completed : <span id="completed-counter">0</span>
                         </li>
                     </ul>
                 </div>
@@ -37,24 +37,24 @@
             <main>
                 <div class="sidebar">
                     <ul>
-                        <li class="link">
+                        <li class="link" id="all-section">
                             <img src="./src/all.svg">
                             all
                         </li>
-                        <li class="link">
+                        <li class="link" id="reading-section">
                             <img src="./src/reading.svg">
                             reading
                         </li>
-                        <li class="link">
+                        <li class="link" id="completed-section">
                             <img src="./src/completed.svg">
                             completed
                         </li>
-                        <li class="link">
+                        <li class="link" id="planned-section">
                             <img src="./src/plan.svg">
-                            plan to read
+                            planned to read
                         </li>
                     </ul>
-                    <div class="add-book" aria-disabled="true">
+                    <div class="add-book">
                         <img src="./src/add.svg">
                     </div>
                 </div>
@@ -65,6 +65,7 @@
             </footer>
         </div>
         <div class="login-container">
+            <img src="./src/close.svg" alt="close" class="close">
             <div>
                 <label for="Name">Name</label>
                 <input type="text" id="get-name">
@@ -72,6 +73,7 @@
             <button id="submit-login">Submit</button>
         </div>
         <div class="add-book-container">
+            <img src="./src/close.svg" alt="close" class="close">
             <div class="label">
                 <label for="Title">Title</label>
                 <input type="text" id="get-title">
@@ -85,9 +87,9 @@
                 <input type="number" min="1" id="get-pages">
             </div>
             <select name="book-state" id="book-state">
-                <option value="watching">Watching</option>
-                <option value="plan">Plan to Watch</option>
-                <option value="completed">Completed</option>
+                <option value="Reading">Reading</option>
+                <option value="Planned to Read">Planned to Read</option>
+                <option value="Completed">Completed</option>
             </select>
             <button id="submit-book">Submit</button>
         </div>
