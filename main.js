@@ -1,9 +1,17 @@
 const page = document.querySelector('.page')
 
 //? Blur function
-function blur() {
+function blur(container) {
     page.style.opacity = 0.3
     page.style.userSelect = 'none'
+    container.style.display = 'flex'
+}
+
+//? Unblur function
+function unblur(container) {
+    page.style.opacity = 1
+    page.style.userSelect = 'all'
+    container.style.display = 'none'
 }
 
 //? Login function
@@ -12,8 +20,7 @@ const login = document.querySelector('.login')
 const loginContainer = document.querySelector('.login-container')
 
 login.addEventListener('click', () => {
-    loginContainer.style.display = 'flex'
-    blur()
+    blur(loginContainer)
 })
 
 const submitLogin = document.getElementById('submit-login')
@@ -58,8 +65,7 @@ function Book() {
 
 if (canAddBook) {
     addBook.addEventListener('click', () => {
-        blur()
-        bookContainer.style.display = 'flex'
+        blur(bookContainer)
     })
 }
 
@@ -82,21 +88,49 @@ submitBook.addEventListener('click', () => {
 
         localStorage.setItem('shelf', JSON.stringify(shelf))
         
-        location.reload() // reload page
+        render(shelf, shelf)
+        unblur(submitBook.parentNode)
+
+        // reset inputs
+        document.getElementById('get-title').value = ''
+        document.getElementById('get-author').value = ''
+        document.getElementById('get-pages').value = ''
+
     } else {
         // TODO: Show error?
     }
 })
 
+
 //? Render function
-const render = (shelf) => {
-    shelf.forEach((book, index) => {
+let booksReading = []
+let booksCompleted = []
+let booksPlanned = []
+
+const readingC = document.getElementById('reading-counter')
+const plannedC = document.getElementById('planned-counter')
+const completedC = document.getElementById('completed-counter')
+
+const renderCounter = () => {
+    readingC.textContent = booksReading.length
+    completedC.textContent = booksCompleted.length
+    plannedC.textContent = booksPlanned.length
+}
+
+// TODO: Change state with select
+const render = (shelf, division) => {
+    books.innerHTML = ''
+    division.forEach((book, index) => {
         books.innerHTML += `
             <div class="book" id="book-${index}">
                 <p class="title">${book.title}</p>
                 <p class="author">${book.author}</p>
                 <p class="pages">${book.pages}</p>
-                <p class="state">${book.state}</p>
+                <select class="state">
+                    <option value="reading" ${book.state === 'Reading' ? 'selected' : ''}>Reading</option>
+                    <option value="planned" ${book.state === 'Planned to Read' ? 'selected' : ''}>Planned to Read</option>
+                    <option value="completed" ${book.state === 'Completed' ? 'selected' : ''}>Completed</option>
+                </select>
                 <div class="images">
                     <div class="like-book">
                         <img src="./src/heart.svg" style="${book.liked ? 'filter: grayscale(0%);' : 'filter: grayscale(100%);'}">
@@ -108,6 +142,14 @@ const render = (shelf) => {
             </div>
         `
     })
+
+    // Atualiza os dados todos
+    booksReading = shelf.filter(book => book.state === 'Reading')
+    booksCompleted = shelf.filter(book => book.state === 'Completed')
+    booksPlanned = shelf.filter(book => book.state === 'Planned to Read')
+
+    // Render counter
+    renderCounter()
 }
 
 //? Remove book
@@ -135,7 +177,7 @@ const likeBook = (likeBtn) => {
 
 //? Render All books
 window.addEventListener('DOMContentLoaded', () => {
-    render(shelf)
+    render(shelf, shelf)
 
     // Allow to remove btn
     const removeBtn = document.querySelectorAll('.remove-book')
@@ -144,4 +186,44 @@ window.addEventListener('DOMContentLoaded', () => {
     // Allow to like book
     const likeBtn = document.querySelectorAll('.like-book')
     likeBook(likeBtn)
+})
+
+//? Render specific books
+
+
+// All
+const allBtn = document.getElementById('all-section')
+
+allBtn.addEventListener('click', () => {
+    render(shelf, shelf)
+})
+
+// Reading
+const readingBtn = document.getElementById('reading-section')
+
+readingBtn.addEventListener('click', () => {
+    render(shelf, booksReading)
+})
+
+// Completed
+const completedBtn = document.getElementById('completed-section')
+
+completedBtn.addEventListener('click', () => {
+    render(shelf, booksCompleted)
+})
+
+// Planned to read
+const plannedBtn = document.getElementById('planned-section')
+
+plannedBtn.addEventListener('click', () => {
+    render(shelf, booksPlanned)
+})
+
+//? Close container (login, addBook)
+const close = document.querySelectorAll('.close')
+
+close.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        unblur(e.currentTarget.parentNode)
+    })
 })
