@@ -1,4 +1,24 @@
 const page = document.querySelector('.page')
+const profileContainer = document.querySelector('.profile')
+const login = document.querySelector('.login')
+const loginContainer = document.querySelector('.login-container')
+const submitLogin = document.getElementById('submit-login')
+const inputName = document.getElementById('get-name')
+const books = document.getElementById('books-container')
+const addBook = document.querySelector('.add-book')
+const bookContainer = document.querySelector('.add-book-container')
+const submitBook = document.getElementById('submit-book')
+const readingC = document.getElementById('reading-counter')
+const plannedC = document.getElementById('planned-counter')
+const completedC = document.getElementById('completed-counter')
+const allBtn = document.getElementById('all-section')
+const readingBtn = document.getElementById('reading-section')
+const completedBtn = document.getElementById('completed-section')
+const plannedBtn = document.getElementById('planned-section')
+const close = document.querySelectorAll('.close')
+
+let user = ''
+let lastPage = 'all'
 
 //? Blur function
 function blur(container) {
@@ -15,18 +35,10 @@ function unblur(container) {
 }
 
 //? Login function
-const profileContainer = document.querySelector('.profile')
-const login = document.querySelector('.login')
-const loginContainer = document.querySelector('.login-container')
-
 login.addEventListener('click', () => {
     blur(loginContainer)
 })
 
-const submitLogin = document.getElementById('submit-login')
-const inputName = document.getElementById('get-name')
-
-let user
 submitLogin.addEventListener('click', () => {
     user = inputName.value
     localStorage.setItem('user', user)
@@ -47,12 +59,6 @@ if (user !== null) {
 
 //? Add book
 const canAddBook = localStorage.getItem('user') === null ? false : true
-
-const books = document.getElementById('books-container')
-const addBook = document.querySelector('.add-book')
-const bookContainer = document.querySelector('.add-book-container')
-const submitBook = document.getElementById('submit-book')
-
 let shelf = []
 
 function Book() {
@@ -72,6 +78,7 @@ if (canAddBook) {
 if (localStorage.getItem('shelf') === null || localStorage.getItem('shelf') === '') localStorage.setItem('shelf', shelf)
 else shelf = JSON.parse(localStorage.getItem('shelf'))
 
+//? Submit book
 submitBook.addEventListener('click', () => {
     let title = document.getElementById('get-title').value
     let author = document.getElementById('get-author').value
@@ -101,15 +108,74 @@ submitBook.addEventListener('click', () => {
     }
 })
 
+//? Check last page and render
+const checkRender = () => {
+    console.log(lastPage)
+    if (lastPage === 'all') {
+        render(shelf, shelf)
+    } else if (lastPage === 'reading') {
+        booksReading = shelf.filter((book) => book.state === 'Reading')
+        render(shelf, booksReading)
+    } else if (lastPage === 'completed') {
+        booksCompleted = shelf.filter((book) => book.state === 'Completed')
+        render(shelf, booksCompleted)
+    } else {
+        booksPlanned = shelf.filter((book) => book.state === 'Planned to Read')
+        render(shelf, booksPlanned)
+    }
+}
+
+//? Remove book
+const removeBook = (removeBtn) => {
+    removeBtn.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            shelf.splice(parseInt(e.currentTarget.parentNode.parentNode.id.split('-')[1]), 1)
+            localStorage.setItem('shelf', JSON.stringify(shelf))
+            
+            // Check what page to render
+            checkRender()
+        })
+    })
+}
+
+//? Like a book
+const likeBook = (likeBtn) => {
+    likeBtn.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            let temp = e.currentTarget.parentNode.parentNode.id.split('-')[1]
+            shelf[temp].liked = !shelf[temp].liked
+            localStorage.setItem('shelf', JSON.stringify(shelf))
+
+            // Check what page to render
+            checkRender()
+        })
+    })
+}
+
+//? Change state
+const changeState = (stateSelect) => {
+    stateSelect.forEach((select) => {
+        select.addEventListener('change', (e) => {
+            console.log(shelf)
+
+            let temp = e.currentTarget.parentNode.id.split('-')[1]
+            shelf[temp].state = e.currentTarget.value
+
+            console.log(shelf[temp].state)
+
+            console.log(shelf)
+            localStorage.setItem('shelf', JSON.stringify(shelf))
+            
+            // Check what page to render
+            checkRender()
+        })
+    })
+}
 
 //? Render function
 let booksReading = []
 let booksCompleted = []
 let booksPlanned = []
-
-const readingC = document.getElementById('reading-counter')
-const plannedC = document.getElementById('planned-counter')
-const completedC = document.getElementById('completed-counter')
 
 const renderCounter = () => {
     readingC.textContent = booksReading.length
@@ -117,19 +183,20 @@ const renderCounter = () => {
     plannedC.textContent = booksPlanned.length
 }
 
-// TODO: Change state with select
 const render = (shelf, division) => {
     books.innerHTML = ''
-    division.forEach((book, index) => {
+    division.forEach((book) => {
+        let index = shelf.indexOf(book)
+
         books.innerHTML += `
             <div class="book" id="book-${index}">
                 <p class="title">${book.title}</p>
                 <p class="author">${book.author}</p>
                 <p class="pages">${book.pages}</p>
                 <select class="state">
-                    <option value="reading" ${book.state === 'Reading' ? 'selected' : ''}>Reading</option>
-                    <option value="planned" ${book.state === 'Planned to Read' ? 'selected' : ''}>Planned to Read</option>
-                    <option value="completed" ${book.state === 'Completed' ? 'selected' : ''}>Completed</option>
+                    <option value="Reading" ${book.state === 'Reading' ? 'selected' : ''}>Reading</option>
+                    <option value="Planned to Read" ${book.state === 'Planned to Read' ? 'selected' : ''}>Planned to Read</option>
+                    <option value="Completed" ${book.state === 'Completed' ? 'selected' : ''}>Completed</option>
                 </select>
                 <div class="images">
                     <div class="like-book">
@@ -143,87 +210,59 @@ const render = (shelf, division) => {
         `
     })
 
-    // Atualiza os dados todos
+    // Change counter
     booksReading = shelf.filter(book => book.state === 'Reading')
     booksCompleted = shelf.filter(book => book.state === 'Completed')
     booksPlanned = shelf.filter(book => book.state === 'Planned to Read')
 
-    // Render counter
     renderCounter()
-}
 
-//? Remove book
-const removeBook = (removeBtn) => {
-    removeBtn.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            shelf.splice(parseInt(e.currentTarget.parentNode.parentNode.id.split('-')[1]), 1)
-            localStorage.setItem('shelf', JSON.stringify(shelf))
-            location.reload() // reload page
-        })
-    })
-}
-
-//? Like a book
-const likeBook = (likeBtn) => {
-    likeBtn.forEach((btn) => {
-        btn.addEventListener('click', (e) => {
-            let temp = e.currentTarget.parentNode.parentNode.id.split('-')[1]
-            shelf[temp].liked = !shelf[temp].liked
-            localStorage.setItem('shelf', JSON.stringify(shelf))
-            location.reload() // reload page
-        })
-    })
-}
-
-//? Render All books
-window.addEventListener('DOMContentLoaded', () => {
-    render(shelf, shelf)
+    // Allow to like book
+    const likeBtn = document.querySelectorAll('.like-book')
+    likeBook(likeBtn)
 
     // Allow to remove btn
     const removeBtn = document.querySelectorAll('.remove-book')
     removeBook(removeBtn)
 
-    // Allow to like book
-    const likeBtn = document.querySelectorAll('.like-book')
-    likeBook(likeBtn)
-})
+    // Allow to change state
+    let state = document.querySelectorAll('.state')
+    changeState(state)
+}
 
 //? Render specific books
-
-
 // All
-const allBtn = document.getElementById('all-section')
-
 allBtn.addEventListener('click', () => {
     render(shelf, shelf)
+    lastPage = 'all'
 })
 
 // Reading
-const readingBtn = document.getElementById('reading-section')
-
 readingBtn.addEventListener('click', () => {
     render(shelf, booksReading)
+    lastPage = 'reading'
 })
 
 // Completed
-const completedBtn = document.getElementById('completed-section')
-
 completedBtn.addEventListener('click', () => {
     render(shelf, booksCompleted)
+    lastPage = 'completed'
 })
 
 // Planned to read
-const plannedBtn = document.getElementById('planned-section')
-
 plannedBtn.addEventListener('click', () => {
     render(shelf, booksPlanned)
+    lastPage = 'planned'
 })
 
 //? Close container (login, addBook)
-const close = document.querySelectorAll('.close')
-
 close.forEach(btn => {
     btn.addEventListener('click', (e) => {
         unblur(e.currentTarget.parentNode)
     })
+})
+
+//! Render Page
+window.addEventListener('DOMContentLoaded', () => {
+    render(shelf, shelf)
 })
