@@ -30,7 +30,7 @@ function blur(container) {
 //? Unblur function
 function unblur(container) {
     page.style.opacity = 1
-    page.style.userSelect = 'all'
+    page.style.userSelect = 'auto'
     container.style.display = 'none'
 }
 
